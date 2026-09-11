@@ -1,0 +1,75 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+*.egg-info/
+dist/
+build/
+.eggs/
+*.egg
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Virtual environments
+.venv/
+venv/
+env/
+.env/
+
+# Environment variables
+.env
+.env.local
+.env.production
+
+# Node / Frontend
+node_modules/
+frontend/dist/
+frontend/.vite/
+*.local
+
+# Clips storage
+clips/*
+!clips/.gitkeep
+
+# Model weights
+# Bobot ST-GCN++ hasil training sendiri DISERTAKAN (~2.3 MB per stream).
+# Bobot YOLO-pose & triase adalah turunan pihak ketiga -> tidak disertakan.
+models/*.pt
+models/*.onnx
+models/*.pth
+!models/stgcn_prod_*.pth
+
+# Thumbnails cache
+clips_thumbnails/
+
+# Demo build output
+sus_demo/
+
+# Runtime event recordings
+data/live_events/*
+!data/live_events/.gitkeep
+
+# Coverage
+.coverage
+htmlcov/
+
+# IDE / tooling
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Docker
+docker/postgres-data/

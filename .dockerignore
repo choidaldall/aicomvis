@@ -1,0 +1,52 @@
+# Build context exclusions — keeps the image build fast and small.
+
+# Version control
+.git/
+.gitignore
+
+# Python environments & caches
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+
+# Node — dependencies are installed inside the build stage
+frontend/node_modules/
+frontend/dist/
+frontend/.vite/
+
+# Build outputs — the frontend is rebuilt inside the image
+static/
+sus_demo/
+
+# Runtime data — mounted as volumes, never baked into the image
+clips/
+clips_thumbnails/
+data/
+models/
+*.pt
+*.pth
+*.onnx
+
+# Secrets — injected at runtime via env_file
+.env
+backend/.env
+*.local
+
+# Docs & tests — not needed at runtime
+docs/
+backend/tests/
+scripts/
+*.md
+
+# Editor / OS
+.vscode/
+.idea/
+.DS_Store
+*.swp
+*~
+*.log

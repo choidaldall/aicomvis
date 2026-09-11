@@ -1,0 +1,37 @@
+services:
+  aicomvis:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    image: aicomvis:1.0
+    container_name: aicomvis
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    environment:
+      - PYTHONUNBUFFERED=1
+    env_file:
+      - path: ../backend/.env
+        required: false
+    volumes:
+      - ../models:/app/models:ro
+      - ../clips:/app/clips:rw
+      - ../data:/app/data:rw
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    healthcheck:
+      test: ["CMD", "python3", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/api/status')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"

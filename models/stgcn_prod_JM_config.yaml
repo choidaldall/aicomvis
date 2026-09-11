@@ -1,0 +1,70 @@
+experiment:
+  name: stgcn_xg_finetune_JM
+  seed: 42
+  deterministic: true
+paths:
+  skeletons_dir: data/skeletons
+  output_dir: docs/training
+  models_dir: models
+model:
+  arch: stgcn_plus
+  in_channels: 2
+  num_classes: 2
+  num_joints: 17
+  partition: spatial
+  channels:
+  - 16
+  - 32
+  - 64
+  - 128
+  blocks_per_stage:
+  - 2
+  - 2
+  - 2
+  dropout: 0.1
+  physics_dim: 4
+data:
+  output_format: graph
+  stream: JM
+  normalize_mode: per_window
+  return_physics: true
+  window_size: 30
+  stride: 6
+  fall_window_threshold: 0.5
+  max_missing_pose_in_window: 0.3
+  normalize: true
+  drop_facial_keypoints: false
+  exclude_post_fall: true
+  include_datasets:
+  - ruang_xg
+  - aicomvis_44_audited
+  - aicomvis_55
+augmentation:
+  enabled: true
+  rotation_deg: 10.0
+  scale_pct: 0.05
+  translation_pct: 0.03
+  keypoint_dropout_prob: 0.05
+  horizontal_flip: true
+training:
+  epochs: 30
+  batch_size: 32
+  micro_batch_size: 32
+  num_workers: 2
+  optimizer: adam
+  lr: 1.0e-05
+  weight_decay: 1.0e-05
+  grad_clip_norm: 1.0
+  amp: true
+  early_stopping_patience: 8
+  early_stopping_metric: val_pr_auc
+  checkpoint_interval: 5
+  keep_last_intervals: 3
+  watchdog_nan_check: true
+  auto_checkpoint_minutes: 30
+  use_weighted_sampler: false
+  mixup_alpha: 0.0
+loss:
+  type: ldam
+  max_m: 0.5
+  scale: 30.0

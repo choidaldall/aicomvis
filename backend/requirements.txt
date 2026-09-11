@@ -1,0 +1,38 @@
+# AIComVis Production Deployment Requirements
+# Python 3.10
+# CUDA 11.8 (works with newer CUDA runtimes too)
+#
+# Install:
+#   python3.10 -m venv .venv && source .venv/bin/activate
+#   pip install -r backend/requirements.txt
+#
+# Note: This is a DEPLOYMENT-only requirements file. Training/research
+# dependencies (sklearn, matplotlib, pandas, tensorboard, etc.) are
+# intentionally omitted — those live in the research archive.
+
+# --- Web framework ---
+fastapi==0.115.12
+uvicorn[standard]==0.34.2
+python-multipart==0.0.20
+websockets==15.0.1
+aiofiles==24.1.0
+
+# --- Config / serialization ---
+pydantic-settings==2.9.1
+PyYAML==6.0.3
+
+# --- HTTP + Notifications ---
+httpx==0.28.1
+python-telegram-bot==22.1
+
+# --- Logging ---
+loguru==0.7.3
+
+# --- ML inference ---
+# Use CUDA 11.8 wheels (or remove +cu118 for CPU-only). GPU recommended (GTX 1080+).
+--extra-index-url https://download.pytorch.org/whl/cu118
+torch==2.7.1+cu118
+torchvision==0.22.1+cu118
+numpy==2.2.6
+opencv-python==4.13.0.92
+ultralytics==8.4.31
