@@ -1,10 +1,6 @@
 # AIComVis v1.0
 
-Sistem deteksi jatuh real-time berbasis computer vision (ST-GCN++ skeleton classifier) dengan triase demografis. Dirancang untuk deployment CCTV institusional.
-
-Tugas Akhir ET4092, Teknik Telekomunikasi ITB, 2026.
-Septian Alfito Rachman (NIM 18122008), PLaiGROUND ITB.
-
+DESIGN AND IMPLEMENTATION OF A SKELETON-BASED REAL-TIME FALL DETECTION SYSTEM ON CCTV USING ST-GCN++
 
 ## Tentang Project
 
@@ -12,10 +8,10 @@ Aplikasi web deteksi jatuh siap produksi:
 
 - Membaca stream RTSP dari CCTV
 - Mendeteksi jatuh secara real-time pakai ST-GCN++ (skeleton classifier 4 stream)
-- Merekam klip 10 detik (5 detik pra + 5 detik pasca) saat ada kejadian
-- Triase demografis (kelompok usia, jenis kelamin, kacamata) untuk prioritas pengasuh
-- Mengirim alert Telegram berisi prioritas + tautan klip
-- UI web untuk pemantauan langsung + penelusuran klip
+- Merekam klip 10 detik (5 detik pra dan 5 detik pasca) saat ada kejadian
+- Triase demografis (kelompok usia, jenis kelamin, kacamata) untuk prioritas penanganan
+- Mengirim alert Telegram berisi prioritas dan klip video
+- UI web untuk pemantauan langsung dan daftar klip
 
 
 ## Arsitektur
@@ -116,13 +112,13 @@ Catatan:
 
 Bobot produksi ada di models/stgcn_prod_{J,B,JM,BM}.pth, dilatih dengan transfer learning:
 
-1. Pretrain pada 7 dataset publik (~3000 video) dengan LDAM Loss + K-fold Model Soups
-2. Finetune pada 147 video Ruang XG
+1. Pretrain pada 7 dataset publik (~3000 video) dengan LDAM Loss dan K-fold Model Soups
+2. Finetune pada 147 video dataset mandiri
 
 Performa (5-fold CV + bootstrap CI 1000 resamples):
 
 - CAUCAFall (Eraso Guerrero dkk., 2022), GMDCSA-24 (Alam dkk., 2024), FUKinect, URFD (Kwolek dan Kepski, 2014), dan Le2i (Charfi dkk., 2013). : memperoleh rata-rata sensitivitas 86,9%, spesifisitas 92,0%, dan F1-score 86,3% 
-- Ruang XG (n=147): Sens 88,9%, Spec 84,7%, F1 75,3%
+- Dataset Mandiri (n=147): sensitivitas 88,9%, spesifisitas 84,7%, dan F1-score 75,3%
 
 
 ## Struktur Folder (Produksi)
@@ -162,23 +158,3 @@ Performa (5-fold CV + bootstrap CI 1000 resamples):
 - docs/ARCHITECTURE.md  pipeline, struktur folder, konfigurasi
 - docs/api.md           referensi API
 - docs/deployment.md    panduan deployment
-
-
-## Research Archive
-
-Metodologi, protokol evaluasi, kode training, info lisensi dataset, dan dokumentasi pra-cleanup disimpan terpisah di:
-
-~/aicomvis_research_archive/
-
-Isi penting:
-
-- 01_STGCN++_breakthrough/docs/METODOLOGI_TA.md   metodologi lengkap
-- 01_STGCN++_breakthrough/docs/HONEST_EVALUATION.md   protokol evaluasi bebas leakage
-- 01_STGCN++_breakthrough/docs/ISTILAH_TEKNIS_TA.md   glosarium teknis
-- 01_STGCN++_breakthrough/code/training/   infrastruktur training
-- 04_research_datasets/   dataset pretrain (37GB)
-
-
-## Lisensi
-
-Penggunaan akademis. Bobot produksi berasal dari rekaman sendiri + dataset riset publik (lihat ~/aicomvis_research_archive/04_research_datasets/README.md untuk lisensi tiap dataset).
